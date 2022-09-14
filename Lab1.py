@@ -2,7 +2,7 @@ import random
 import time
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.optimize import curve_fit
+import scipy
 import progressbar
 from statistics import mean
 from typing import Callable
@@ -84,7 +84,7 @@ def cycle_function(function: Callable) -> None:
     elif function.__name__ == "matrix_prod":
         approx_func = approx_cube
 
-    popt, _ = curve_fit(approx_func, x, y, maxfev=100000)
+    popt, _ = scipy.optimize.curve_fit(approx_func, x, y, maxfev=100000)
     plt.plot(x, approx_func(x, *popt), linewidth=1, label="Theoretical")
     plt.ylim(0, max(times) + max(times) / 10)
     plt.title("{}".format(labels[function.__name__]))
@@ -267,31 +267,38 @@ def matrix_prod(matrix_1: list, matrix_2: list) -> list:
     return result
 
 
-def approx_const(x, a):
+def approx_const(x: float, a: float) -> float:
     """
     A function that returns result of constant function
 
     :param x: param x
     :param a: coefficient a
+    :type x: float
+    :type a: float
     :return: result of function
+    :rtype: float
     """
     return 0 * x + a
 
 
-def approx_linear(x, a, b):
+def approx_linear(x: float, a: float, b: float) -> float:
     """
     A function that returns result of linear function
 
     :param x: param x
     :param a: coefficient a
     :param b: coefficient b
+    :type x: float
+    :type a: float
+    :type b: float
     :return: result of function
+    :rtype: float
     """
 
     return a * x + b
 
 
-def approx_nlogn(x, a, b, c):
+def approx_nlogn(x: float, a: float, b: float, c: float) -> float:
     """
     A function that returns result of linear-logarithmic function
 
@@ -299,13 +306,18 @@ def approx_nlogn(x, a, b, c):
     :param a: coefficient a
     :param b: coefficient b
     :param c: coefficient c
+    :type x: float
+    :type a: float
+    :type b: float
+    :type c: float
     :return: result of function
+    :rtype: float
     """
 
     return a * x * np.log(x * b) + c
 
 
-def approx_square(x, a, b, c):
+def approx_square(x: float, a: float, b: float, c: float):
     """
     A function that returns result of square function
 
@@ -313,13 +325,18 @@ def approx_square(x, a, b, c):
     :param a: coefficient a
     :param b: coefficient b
     :param c: coefficient c
+    type x: float
+    :type a: float
+    :type b: float
+    :type c: float
     :return: result of function
+    :rtype: float
     """
 
     return a * x ** 2 + b * x + c
 
 
-def approx_cube(x, a, b, c, d):
+def approx_cube(x: float, a: float, b: float, c: float, d: float) -> float:
     """
     A function that returns result of cube function
 
@@ -328,7 +345,13 @@ def approx_cube(x, a, b, c, d):
     :param b: coefficient b
     :param c: coefficient c
     :param d: coefficient d
+    type x: float
+    :type a: float
+    :type b: float
+    :type c: float
+    :type d: float
     :return: result of function
+    :rtype: float
     """
 
     return a * x ** 3 + b * x ** 2 + c * x + d
