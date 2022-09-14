@@ -2,7 +2,7 @@ import random
 import time
 import matplotlib.pyplot as plt
 import numpy as np
-import scipy
+from scipy.optimize import curve_fit
 import progressbar
 from statistics import mean
 from typing import Callable
@@ -84,7 +84,7 @@ def cycle_function(function: Callable) -> None:
     elif function.__name__ == "matrix_prod":
         approx_func = approx_cube
 
-    popt, _ = scipy.optimize.curve_fit(approx_func, x, y, maxfev=100000)
+    popt, _ = curve_fit(approx_func, x, y, maxfev=100000)
     plt.plot(x, approx_func(x, *popt), linewidth=1, label="Theoretical")
     plt.ylim(0, max(times) + max(times) / 10)
     plt.title("{}".format(labels[function.__name__]))
